@@ -36,4 +36,5 @@ export default {
 
 <style scoped>
 /* Stili per DashboardPage.vue */
+
 </style>

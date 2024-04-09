@@ -20,7 +20,8 @@
 
     <!-- Mostra un messaggio di errore se presente -->
     <p v-if="error" class="error">{{ error }}</p>
-  </div>
+</div>
+
 </template>
 
 <script>
@@ -123,6 +124,56 @@ export default {
 </script>
 
 <style scoped>
+
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&display=swap');
+
+.user-profile {
+  font-family: 'Oswald', sans-serif;
+  font-size: 25px;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.829), rgba(0, 0, 0, 0.5)), url('../assets/movies.jpg');
+  color: white;
+  padding: 10px;
+  border-radius: 0px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  background-size: cover;
+  min-height: 90%; /* Assicura che .user-profile copra tutta l'altezza */
+  background-attachment: fixed;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+p {
+  font-size: 20px;
+}
+button {
+  background-color: #e50914; /* Colore rosso Netflix */
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-right: 10px;
+}
+button:last-child {
+  margin-right: 0; /* Rimuove lo spazio a destra dall'ultimo bottone */
+}
+
+button:hover {
+  background-color: #f40612;
+}
+.modal {
+  /* Stili base della modal */
+  animation: fadeIn 0.3s;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
 .error {
   color: red;
 }

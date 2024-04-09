@@ -1,8 +1,10 @@
 <template>
-  <div>
+  <div id="app-container">
     <nav>
       <div class="navbar-left">
-        <img src="./assets/cinema.jpg" alt="Logo" class="navbar-logo">
+        <router-link to="/" class="navbar-logo-link">
+          <img src="./assets/cinema.jpg" alt="Logo" class="navbar-logo">
+        </router-link>
         <SearchBar />
         <!-- Icone/funzionalità aggiuntive -->
       </div>
@@ -18,8 +20,13 @@
         </router-link>
       </div>
     </nav>
+    <div class="content">
     <router-view/>
-  </div>
+    </div>
+    <div class="footer">
+      <p>© 2024 CinemaWorld. Tutti i diritti riservati.</p>
+    </div>
+</div>
 </template>
 
 <script>

@@ -3,6 +3,7 @@ import HomePage from '@/views/HomePage.vue'
 import LoginPage from '@/views/LoginPage.vue'
 import RegisterPage from '@/views/RegisterPage.vue'
 import DashboardPage from '@/views/DashboardPage.vue'
+import EditProfile from '@/views/EditProfile.vue'
 import { auth } from '@/firebase'
 // import { onAuthStateChanged } from 'firebase/auth'
 
@@ -34,6 +35,11 @@ const routes = [
     name: 'UserProfile',
     component: () => import('@/views/UserProfile.vue'),
     meta: { requiresAuth: true }
+  },
+  {
+    path: '/edit-profile',
+    name: 'EditProfile',
+    component: EditProfile
   },
   {
     path: '/register',
