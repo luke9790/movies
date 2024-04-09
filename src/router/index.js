@@ -4,6 +4,8 @@ import LoginPage from '@/views/LoginPage.vue'
 import RegisterPage from '@/views/RegisterPage.vue'
 import DashboardPage from '@/views/DashboardPage.vue'
 import EditProfile from '@/views/EditProfile.vue'
+import ActorDetail from '@/views/ActorDetail.vue'
+import DirectorDetail from '@/views/DirectorDetail.vue'
 import { auth } from '@/firebase'
 // import { onAuthStateChanged } from 'firebase/auth'
 
@@ -40,6 +42,16 @@ const routes = [
     path: '/edit-profile',
     name: 'EditProfile',
     component: EditProfile
+  },
+  {
+    path: '/actor/:id',
+    name: 'ActorDetail',
+    component: ActorDetail // Assicurati di importare questo componente
+  },
+  {
+    path: '/director/:id',
+    name: 'DirectorDetail',
+    component: DirectorDetail
   },
   {
     path: '/register',

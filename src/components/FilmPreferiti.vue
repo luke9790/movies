@@ -1,28 +1,26 @@
 <template>
-    <div>
+  <div>
     <h3>Aggiungi ai Preferiti</h3>
     <input v-model="termineDiRicerca" placeholder="Cerca Film">
     <div class="film-grid">
-      <div v-for="film in risultatiRicerca" :key="film.id" class="film-card" @click="aggiungiPreferito(film)">
-        <img :src="`https://image.tmdb.org/t/p/w200${film.poster_path}`" alt="Poster del film" class="film-image">
-        <div class="film-title">{{ film.title }}</div>
+      <!-- Sezione per l'aggiunta ai preferiti -->
+    </div>
+    <h3>Film Preferiti</h3>
+    <div class="preferiti-grid">
+      <div v-for="film in filmPreferiti" :key="film.id || film" class="film-card" @click="vaiADettagliFilm(film.id)">
+        <img v-if="film.poster_path" :src="`https://image.tmdb.org/t/p/w200${film.poster_path}`" alt="Poster del film" class="film-image">
+        <div class="film-title">{{ film.title || film }}</div>
+        <button @click.stop="rimuoviPreferito(film)">Rimuovi</button>
       </div>
     </div>
-      <h3>Film Preferiti</h3>
-        <div class="preferiti-grid">
-          <div v-for="film in filmPreferiti" :key="film.id || film" class="film-card">
-            <img v-if="film.poster_path" :src="`https://image.tmdb.org/t/p/w200${film.poster_path}`" alt="Poster del film" class="film-image">
-            <div class="film-title">{{ film.title || film }}</div>
-            <button @click="rimuoviPreferito(film)">Rimuovi</button>
-          </div>
-        </div>
-    </div>
-  </template>
+  </div>
+</template>
 
 <script>
 import { db } from '@/firebase'
 import { doc, getDoc, setDoc, updateDoc, arrayUnion, arrayRemove } from 'firebase/firestore'
 import { ref, onMounted, watch, watchEffect } from 'vue'
+import { useRouter } from 'vue-router'
 
 export default {
   name: 'FilmPreferiti',
@@ -33,6 +31,11 @@ export default {
     const risultatiRicerca = ref([])
     const API_URL = 'https://api.themoviedb.org/3'
     const API_KEY = process.env.VUE_APP_TMDB_API_KEY
+    const router = useRouter()
+
+    const vaiADettagliFilm = (idFilm) => {
+      router.push({ name: 'MovieDetail', params: { id: idFilm } })
+    }
 
     const caricaPreferiti = async () => {
       if (!props.userId) return
@@ -97,7 +100,7 @@ export default {
 
     onMounted(caricaPreferiti)
 
-    return { termineDiRicerca, risultatiRicerca, filmPreferiti, aggiungiPreferito, rimuoviPreferito }
+    return { termineDiRicerca, risultatiRicerca, filmPreferiti, aggiungiPreferito, vaiADettagliFilm, rimuoviPreferito }
   }
 }
 </script>

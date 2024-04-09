@@ -46,12 +46,12 @@ body, html {
 
   .user-profile {
 	min-height: 80vh;
-	
   }
+  
   /* Stili specifici per la home */
   .home {
 	position: relative;
-	background: url('../assets/movies.jpg') center no-repeat;
+	background: url('../assets/mmrdykwhh2b11.png') center no-repeat;
 	background-size: cover; /* Modificato per usare solo 'cover' */
 	color: white; /* Cambiato in bianco per contrasto con l'overlay */
   }
