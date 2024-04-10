@@ -1,9 +1,12 @@
 <template>
   <div>
     <h3>Aggiungi ai Preferiti</h3>
-    <input v-model="termineDiRicerca" placeholder="Cerca Film">
+    <input v-model="termineDiRicerca" placeholder="Cerca Film" @input="cercaFilm">
     <div class="film-grid">
-      <!-- Sezione per l'aggiunta ai preferiti -->
+      <div v-for="film in risultatiRicerca.slice(0, 5)" :key="film.id" class="film-card" @click="aggiungiPreferito(film)">
+        <img v-if="film.poster_path" :src="`https://image.tmdb.org/t/p/w200${film.poster_path}`" alt="Poster del film">
+        <div class="film-title">{{ film.title }}</div>
+      </div>
     </div>
     <h3>Film Preferiti</h3>
     <div class="preferiti-grid">
@@ -18,7 +21,7 @@
 
 <script>
 import { db } from '@/firebase'
-import { doc, getDoc, setDoc, updateDoc, arrayUnion, arrayRemove } from 'firebase/firestore'
+import { doc, getDoc, setDoc, updateDoc, arrayUnion } from 'firebase/firestore'
 import { ref, onMounted, watch, watchEffect } from 'vue'
 import { useRouter } from 'vue-router'
 
@@ -64,13 +67,34 @@ export default {
       }
     })
 
+    // Esempio di funzione per ottenere i dettagli del film
+    const fetchDettagliFilm = async (filmId) => {
+      const response = await fetch(`${API_URL}/movie/${filmId}?api_key=${API_KEY}&append_to_response=credits`)
+      const data = await response.json()
+      return {
+        genres: data.genres, // Restituisce l'array completo degli oggetti genere
+        director: data.credits.crew.find(person => person.job === 'Director')?.name || '',
+        actors: data.credits.cast.slice(0, 3).map(actor => ({ name: actor.name, id: actor.id })) // Assicurati che questa struttura dati corrisponda a ciò che ti aspetti
+      }
+    }
+
     const aggiungiPreferito = async (film) => {
+      // Ottieni i dettagli del film, inclusi generi, regista e attori principali
+      const dettagliFilm = await fetchDettagliFilm(film.id)
+      // Assicurati che tutti i campi richiesti siano definiti
+      if (!dettagliFilm.genres || !dettagliFilm.director || dettagliFilm.actors.some(actor => actor === undefined)) {
+        console.error('Uno o più dettagli del film sono undefined:', dettagliFilm)
+        return // Impedisci l'aggiunta del film ai preferiti se mancano dettagli
+      }
       const nuovoPreferito = {
         id: film.id,
         title: film.title,
-        poster_path: film.poster_path // Salva anche il percorso del poster
+        poster_path: film.poster_path || [], // Salva anche il percorso del poster
+        genre_ids: dettagliFilm.genres.map(genre => genre.id) || [], // ID dei generi
+        director: dettagliFilm.director || 'Sconosciuto', // Nome del regista
+        actors: dettagliFilm.actors.map(actor => actor.name) || [] // Nomi degli attori principali
       }
-
+      console.log('Nuovo Preferito:', nuovoPreferito)
       const filmRef = doc(db, 'utenti', props.userId)
       const docSnap = await getDoc(filmRef)
 
@@ -87,15 +111,21 @@ export default {
 
     const rimuoviPreferito = async (film) => {
       const filmRef = doc(db, 'utenti', props.userId)
+      const docSnap = await getDoc(filmRef)
 
-      await updateDoc(filmRef, {
-        preferiti: arrayRemove({
-          id: film.id,
-          title: film.title,
-          poster_path: film.poster_path
-        })
-      })
-      caricaPreferiti() // Aggiorna la lista dei preferiti dopo la rimozione
+      if (docSnap.exists()) {
+      // Recupera l'attuale lista dei preferiti
+        let preferitiAttuali = docSnap.data().preferiti || []
+
+        // Rimuove il film dall'array basandosi sull'ID
+        preferitiAttuali = preferitiAttuali.filter(f => f.id !== film.id)
+
+        // Aggiorna l'elenco dei preferiti in Firestore
+        await updateDoc(filmRef, { preferiti: preferitiAttuali })
+
+        // Aggiorna l'elenco dei preferiti nell'UI
+        filmPreferiti.value = preferitiAttuali
+      }
     }
 
     onMounted(caricaPreferiti)

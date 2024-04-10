@@ -12,6 +12,7 @@
         <router-link to="/" class="nav-item">Home</router-link>
         <router-link v-if="!utente" to="/login" class="nav-item">Login</router-link>
         <router-link v-if="utente" to="/dashboard" class="nav-item">Favourites</router-link>
+        <router-link v-if="utente" to="/suggest-movies" class="nav-item">Suggest Movies</router-link>
         <!-- Elementi di autenticazione -->
         <router-link v-if="!utente" to="/register" class="nav-item login-link">Sign Up</router-link>
         <!-- Modifica qui per l'accesso alla pagina del profilo -->
