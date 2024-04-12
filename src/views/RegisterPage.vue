@@ -1,6 +1,6 @@
 <template>
   <div class="register">
-    <h1>Registrazione</h1>
+    <h1>Registration</h1>
     <form @submit.prevent="register">
       <input v-model="username" type="text" placeholder="Nome utente" required>
       <input v-model="email" type="email" placeholder="Email" required>
@@ -8,13 +8,13 @@
       <input v-model="firstName" type="text" placeholder="Nome">
       <input v-model="lastName" type="text" placeholder="Cognome">
       <select v-model="gender">
-        <option disabled value="">Seleziona il genere</option>
-        <option>Maschio</option>
-        <option>Femmina</option>
-        <option>Altro</option>
+        <option disabled value="">Select Gender</option>
+        <option>Male</option>
+        <option>Female</option>
+        <option>Other</option>
       </select>
       <input v-model="country" type="text" placeholder="Paese">
-      <button type="submit">Registra</button>
+      <button type="submit">Register</button>
       <p v-if="error" class="error">{{ error }}</p>
     </form>
   </div>

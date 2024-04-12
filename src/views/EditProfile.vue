@@ -1,18 +1,18 @@
 <template>
 <div class="edit-profile-container">
   <div class="edit-profile">
-    <h1>Modifica Profilo</h1>
+    <h1>Edit Profile</h1>
     <form @submit.prevent="updateProfile">
       <div>
-        <label for="username">Nome Utente:</label>
+        <label for="username">Username:</label>
         <input id="username" v-model="user.username" />
       </div>
       <div>
-        <label for="firstName">Nome:</label>
+        <label for="firstName">Name:</label>
         <input id="firstName" v-model="user.firstName" />
       </div>
       <div>
-        <label for="lastName">Cognome:</label>
+        <label for="lastName">Surname:</label>
         <input id="lastName" v-model="user.lastName" />
       </div>
       <div>
@@ -20,19 +20,19 @@
         <input id="email" v-model="user.email" type="email" />
       </div>
       <div>
-        <label for="gender">Genere:</label>
+        <label for="gender">Gender:</label>
         <select id="gender" v-model="user.gender">
-          <option value="">Seleziona un'opzione</option>
-          <option value="maschio">Maschio</option>
-          <option value="femmina">Femmina</option>
-          <option value="altro">Altro</option>
+          <option value="">Select an option</option>
+          <option value="maschio">Male</option>
+          <option value="femmina">Female</option>
+          <option value="altro">Other</option>
         </select>
       </div>
       <div>
-        <label for="country">Paese:</label>
+        <label for="country">Country:</label>
         <input id="country" v-model="user.country" />
       </div>
-      <button type="submit">Salva Modifiche</button>
+      <button type="submit">Save Changes</button>
     </form>
   </div>
 </div>

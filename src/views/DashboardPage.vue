@@ -1,7 +1,7 @@
 <template>
   <div class="dashboard">
-    <h1>Preferiti</h1>
-    <p>Benvenuto nella tua area riservata ai film preferiti!</p>
+    <h1>Favourites</h1>
+    <p>Welcome to your reserved section dedicated to your favourite movies</p>
     <!-- Qui puoi aggiungere altre funzionalità specifiche per l'utente autenticato -->
     <FilmPreferiti :userId="userId" />
   </div>

@@ -25,7 +25,7 @@
     <router-view/>
     </div>
     <div class="footer">
-      <p>© 2024 CinemaWorld. Tutti i diritti riservati.</p>
+      <p>© 2024 CinemaWorld. All rights reserved.</p>
     </div>
 </div>
 </template>

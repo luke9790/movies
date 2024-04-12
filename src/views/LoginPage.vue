@@ -5,7 +5,7 @@
       <input v-model="email" type="email" placeholder="Email" required>
       <input v-model="password" type="password" placeholder="Password" required>
       <button type="submit">Login</button>
-      <p>Non hai un account? <router-link to="/register">Registrati ora</router-link></p>
+      <p>Don't have an account? <router-link to="/register">Register now</router-link></p>
       <!-- Visualizzazione del messaggio di errore -->
       <p v-if="error" class="error">{{ error }}</p>
     </form>

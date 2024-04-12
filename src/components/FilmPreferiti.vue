@@ -1,19 +1,19 @@
 <template>
   <div>
-    <h3>Aggiungi ai Preferiti</h3>
-    <input v-model="termineDiRicerca" placeholder="Cerca Film" @input="cercaFilm">
+    <h3>Add to favourites</h3>
+    <input v-model="termineDiRicerca" placeholder="Search a movie" @input="cercaFilm">
     <div class="film-grid">
       <div v-for="film in risultatiRicerca.slice(0, 5)" :key="film.id" class="film-card" @click="aggiungiPreferito(film)">
         <img v-if="film.poster_path" :src="`https://image.tmdb.org/t/p/w200${film.poster_path}`" alt="Poster del film">
         <div class="film-title">{{ film.title }}</div>
       </div>
     </div>
-    <h3>Film Preferiti</h3>
+    <h3>Favourites Movies</h3>
     <div class="preferiti-grid">
       <div v-for="film in filmPreferiti" :key="film.id || film" class="film-card" @click="vaiADettagliFilm(film.id)">
         <img v-if="film.poster_path" :src="`https://image.tmdb.org/t/p/w200${film.poster_path}`" alt="Poster del film" class="film-image">
         <div class="film-title">{{ film.title || film }}</div>
-        <button @click.stop="rimuoviPreferito(film)">Rimuovi</button>
+        <button @click.stop="rimuoviPreferito(film)">Delete</button>
       </div>
     </div>
   </div>

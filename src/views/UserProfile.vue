@@ -1,20 +1,20 @@
 <template>
   <div class="user-profile">
-    <h1>Profilo Utente</h1>
-    <p><strong>Nome Utente:</strong> {{ username }}</p>
+    <h1>User Profile</h1>
+    <p><strong>Username:</strong> {{ username }}</p>
     <p><strong>Email:</strong> {{ email }}</p>
-    <p><strong>Nome:</strong> {{ firstName }}</p>
-    <p><strong>Cognome:</strong> {{ lastName }}</p>
-    <p><strong>Genere:</strong> {{ gender }}</p>
-    <p><strong>Paese:</strong> {{ country }}</p>
+    <p><strong>Name:</strong> {{ firstName }}</p>
+    <p><strong>Surname:</strong> {{ lastName }}</p>
+    <p><strong>Gender:</strong> {{ gender }}</p>
+    <p><strong>Country:</strong> {{ country }}</p>
 
     <!-- Pulsanti per la modifica e la cancellazione del profilo -->
-    <button @click="startEdit">Modifica Profilo</button>
+    <button @click="startEdit">Edit profile</button>
     <button @click="logout">Logout</button>
-    <button @click="showConfirmModal = true">Cancella Account</button>
+    <button @click="showConfirmModal = true">Delete Account</button>
   <!-- ConfirmModal viene visualizzata quando showConfirmModal è true -->
     <ConfirmModal v-if="showConfirmModal"
-                message="Sei sicuro di voler cancellare il tuo account? Reinserisci la tua password per confermare."
+                message="Are you sure you want to delete your account? This action is irreversible. Please re-enter your password to confirm."
                 @confirm="handleConfirm"
                 @cancel="handleCancel" />
 
@@ -63,16 +63,16 @@ export default {
         if (docSnap.exists()) {
           // Imposta i valori dei dati utente
           const userData = docSnap.data()
-          username.value = userData.username || 'Non specificato'
-          firstName.value = userData.firstName || 'Non specificato'
-          lastName.value = userData.lastName || 'Non specificato'
-          gender.value = userData.gender || 'Non specificato'
-          country.value = userData.country || 'Non specificato'
+          username.value = userData.username || 'Not specified'
+          firstName.value = userData.firstName || 'Not specified'
+          lastName.value = userData.lastName || 'Not specified'
+          gender.value = userData.gender || 'Not specified'
+          country.value = userData.country || 'Not specified'
           // Email e displayName sono già disponibili tramite auth.currentUser
           email.value = auth.currentUser.email
           displayName.value = auth.currentUser.displayName || username.value // Usa username se displayName non è disponibile
         } else {
-          console.log("Nessun documento trovato per l'utente corrente.")
+          console.log('No documents found for current user.')
         }
       }
     }
@@ -102,11 +102,11 @@ export default {
         await reauthenticateWithCredential(user, credential)
         await deleteUser(user)
         // Mostra un messaggio di successo e reindirizza
-        alert('Account cancellato con successo.')
+        alert('Account deleted successfully.')
         router.push('/')
       } catch (error) {
         console.error('Errore durante la cancellazione dell\'account:', error)
-        alert('Errore durante la cancellazione dell\'account. Assicurati che la password sia corretta.')
+        alert('Error deleting account. Please make sure the password is correct.')
       }
       showConfirmModal.value = false
     }
@@ -156,6 +156,7 @@ button {
   cursor: pointer;
   transition: background-color 0.3s ease;
   margin-right: 10px;
+  font-size: 15px;
 }
 button:last-child {
   margin-right: 0; /* Rimuove lo spazio a destra dall'ultimo bottone */

@@ -1,9 +1,9 @@
 <template>
   <div class="modal">
     <p>{{ message }}</p>
-    <input v-model="password" type="password" placeholder="Reinserisci la tua password" />
-    <button @click="confirm">Conferma</button>
-    <button @click="$emit('cancel')">Annulla</button>
+    <input v-model="password" type="password" placeholder="Re-enter your password" />
+    <button @click="confirm">Confirm</button>
+    <button @click="$emit('cancel')">Cancel</button>
   </div>
 </template>
 
