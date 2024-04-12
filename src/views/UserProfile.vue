@@ -157,6 +157,7 @@ button {
   transition: background-color 0.3s ease;
   margin-right: 10px;
   font-size: 15px;
+  font-weight: bold;
 }
 button:last-child {
   margin-right: 0; /* Rimuove lo spazio a destra dall'ultimo bottone */

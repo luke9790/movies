@@ -1,0 +1,55 @@
+[debug] [2024-04-12T09:09:05.346Z] ----------------------------------------------------------------------
+[debug] [2024-04-12T09:09:05.349Z] Command:       /usr/bin/node /usr/local/bin/firebase init hosting
+[debug] [2024-04-12T09:09:05.349Z] CLI Version:   13.7.2
+[debug] [2024-04-12T09:09:05.349Z] Platform:      linux
+[debug] [2024-04-12T09:09:05.350Z] Node Version:  v18.13.0
+[debug] [2024-04-12T09:09:05.350Z] Time:          Fri Apr 12 2024 11:09:05 GMT+0200 (Ora legale dell’Europa centrale)
+[debug] [2024-04-12T09:09:05.350Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2024-04-12T09:09:05.356Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2024-04-12T09:09:05.357Z] > authorizing via signed-in user (luca9790@gmail.com)
+[info] 
+     ######## #### ########  ######## ########     ###     ######  ########
+     ##        ##  ##     ## ##       ##     ##  ##   ##  ##       ##
+     ######    ##  ########  ######   ########  #########  ######  ######
+     ##        ##  ##    ##  ##       ##     ## ##     ##       ## ##
+     ##       #### ##     ## ######## ########  ##     ##  ######  ########
+
+You're about to initialize a Firebase project in this directory:
+
+  /home/luca/Scrivania/Progetti extra/vue/film
+
+[info] 
+=== Project Setup
+[info] 
+[info] First, let's associate this project directory with a Firebase project.
+[info] You can create multiple project aliases by running firebase use --add, 
+[info] but for now we'll just set up a default project.
+[info] 
+[debug] [2024-04-12T09:09:08.007Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects pageSize=100
+[debug] [2024-04-12T09:09:08.500Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects 200
+[debug] [2024-04-12T09:09:08.500Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects [omitted]
+[info] i  Using project film-database-5d752 (film-database) 
+[info] 
+=== Hosting Setup
+[debug] [2024-04-12T09:09:09.624Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/film-database-5d752 [none]
+[debug] [2024-04-12T09:09:09.893Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/film-database-5d752 200
+[debug] [2024-04-12T09:09:09.893Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/film-database-5d752 {"projectId":"film-database-5d752","projectNumber":"265059537649","displayName":"film-database","name":"projects/film-database-5d752","resources":{"hostingSite":"film-database-5d752"},"state":"ACTIVE","etag":"1_07b8cdd8-b7c8-4c4c-b271-f93660fa36cd"}
+[info] 
+[info] Your public directory is the folder (relative to your project directory) that
+[info] will contain Hosting assets to be uploaded with firebase deploy. If you
+[info] have a build process for your assets, use your build's output directory.
+[info] 
+[debug] [2024-04-12T09:10:15.598Z] >>> [apiv2][query] GET https://www.gstatic.com/firebasejs/releases.json [none]
+[debug] [2024-04-12T09:10:15.714Z] <<< [apiv2][status] GET https://www.gstatic.com/firebasejs/releases.json 200
+[debug] [2024-04-12T09:10:15.714Z] <<< [apiv2][body] GET https://www.gstatic.com/firebasejs/releases.json {"current":{"version":"10.11.0","browserURL":"https://www.gstatic.com/firebasejs/10.11.0/firebase.js","packageURL":"https://www.gstatic.com/firebasejs/10.11.0/firebase.tgz"},"live":{"version":"10.11","browserURL":"https://www.gstatic.com/firebasejs/live/10.11/firebase.js","packageURL":"https://www.gstatic.com/firebasejs/live/10.11/firebase.tgz"},"components":{"analytics":"https://www.gstatic.com/firebasejs/10.11.0/firebase-analytics.js","app":"https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js","app-check":"https://www.gstatic.com/firebasejs/10.11.0/firebase-app-check.js","auth":"https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js","auth/cordova":"https://www.gstatic.com/firebasejs/10.11.0/firebase-auth/cordova.js","auth/web-extension":"https://www.gstatic.com/firebasejs/10.11.0/firebase-auth/web-extension.js","functions":"https://www.gstatic.com/firebasejs/10.11.0/firebase-functions.js","firestore":"https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js","firestore/lite":"https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore/lite.js","installations":"https://www.gstatic.com/firebasejs/10.11.0/firebase-installations.js","storage":"https://www.gstatic.com/firebasejs/10.11.0/firebase-storage.js","performance":"https://www.gstatic.com/firebasejs/10.11.0/firebase-performance.js","remote-config":"https://www.gstatic.com/firebasejs/10.11.0/firebase-remote-config.js","messaging":"https://www.gstatic.com/firebasejs/10.11.0/firebase-messaging.js","messaging/sw":"https://www.gstatic.com/firebasejs/10.11.0/firebase-messaging/sw.js","database":"https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js","firestore.memory":"https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.memory.js"}}
+[debug] [2024-04-12T09:10:29.265Z] Error: EACCES: permission denied, open '/home/luca/Scrivania/Progetti extra/vue/film/dist/index.html'
+    at Object.openSync (node:fs:600:3)
+    at Object.writeFileSync (node:fs:2221:35)
+    at Config.writeProjectFile (/usr/local/lib/node_modules/firebase-tools/lib/config.js:155:12)
+    at /usr/local/lib/node_modules/firebase-tools/lib/config.js:178:22
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async doSetup (/usr/local/lib/node_modules/firebase-tools/lib/init/features/hosting/index.js:177:9)
+    at async init (/usr/local/lib/node_modules/firebase-tools/lib/init/index.js:37:9)
+[error] 
+[error] Error: An unexpected error has occurred.
