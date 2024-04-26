@@ -18,11 +18,7 @@ jobs:
       - run: npm run build # Assicurati che questo script generi i file nella cartella 'dist'
       - name: Install Firebase CLI
         run: npm install -g firebase-tools
-      - name: Firebase Login
-        run: firebase login --no-localhost # Esegui l'accesso a Firebase CLI
-      - name: Set Firebase project
-        run: firebase use film-database-5d752 # Sostituisci con il nome o ID del tuo progetto Firebase
       - name: Deploy to Firebase
-        run: firebase deploy --only hosting --token ${{ secrets.FIREBASE_TOKEN }}
+        run: firebase deploy --only hosting --token ${{ secrets.FIREBASE_CI_TOKEN }}
         env:
-          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_CI_TOKEN }}
