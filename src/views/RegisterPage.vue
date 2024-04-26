@@ -73,3 +73,4 @@ export default {
 }
 /* Altri stili per RegisterPage.vue */
 </style>
+firebase

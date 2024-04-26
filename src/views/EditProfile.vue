@@ -1,83 +1,82 @@
 <template>
-<div class="edit-profile-container">
-  <div class="edit-profile">
-    <h1>Edit Profile</h1>
-    <form @submit.prevent="updateProfile">
-      <div>
-        <label for="username">Username:</label>
-        <input id="username" v-model="user.username" />
-      </div>
-      <div>
-        <label for="firstName">Name:</label>
-        <input id="firstName" v-model="user.firstName" />
-      </div>
-      <div>
-        <label for="lastName">Surname:</label>
-        <input id="lastName" v-model="user.lastName" />
-      </div>
-      <div>
-        <label for="email">Email:</label>
-        <input id="email" v-model="user.email" type="email" />
-      </div>
-      <div>
-        <label for="gender">Gender:</label>
-        <select id="gender" v-model="user.gender">
-          <option value="">Select an option</option>
-          <option value="maschio">Male</option>
-          <option value="femmina">Female</option>
-          <option value="altro">Other</option>
-        </select>
-      </div>
-      <div>
-        <label for="country">Country:</label>
-        <input id="country" v-model="user.country" />
-      </div>
-      <button type="submit">Save Changes</button>
-    </form>
+  <div class="edit-profile-container">
+    <div class="edit-profile">
+      <h1>Edit Profile</h1>
+      <form @submit.prevent="updateProfile">
+        <div>
+          <label for="username">Username:</label>
+          <input id="username" v-model="user.username" />
+        </div>
+        <div>
+          <label for="firstName">Name:</label>
+          <input id="firstName" v-model="user.firstName" />
+        </div>
+        <div>
+          <label for="lastName">Surname:</label>
+          <input id="lastName" v-model="user.lastName" />
+        </div>
+        <div>
+          <label for="email">Email:</label>
+          <input id="email" v-model="user.email" type="email" />
+        </div>
+        <div>
+          <label for="gender">Gender:</label>
+          <select id="gender" v-model="user.gender">
+            <option value="">Select an option</option>
+            <option value="maschio">Male</option>
+            <option value="femmina">Female</option>
+            <option value="altro">Other</option>
+          </select>
+        </div>
+        <div>
+          <label for="country">Country:</label>
+          <input id="country" v-model="user.country" />
+        </div>
+        <button type="submit">Save Changes</button>
+      </form>
+    </div>
   </div>
-</div>
 </template>
 
 <script>
-import { ref, onMounted } from 'vue'
-import { auth, db } from '@/firebase'
-import { doc, getDoc, updateDoc } from 'firebase/firestore'
+import { ref, onMounted } from "vue";
+import { auth, db } from "@/firebase";
+import { doc, getDoc, updateDoc } from "firebase/firestore";
 
 export default {
-  setup () {
+  setup() {
     const user = ref({
-      username: '',
-      firstName: '',
-      lastName: '',
-      email: '',
-      gender: '',
-      country: ''
-    })
+      username: "",
+      firstName: "",
+      lastName: "",
+      email: "",
+      gender: "",
+      country: "",
+    });
 
     onMounted(async () => {
       if (auth.currentUser) {
-        const userRef = doc(db, 'users', auth.currentUser.uid)
-        const docSnap = await getDoc(userRef)
+        const userRef = doc(db, "users", auth.currentUser.uid);
+        const docSnap = await getDoc(userRef);
         if (docSnap.exists()) {
-          user.value = { ...docSnap.data() }
+          user.value = { ...docSnap.data() };
         }
       }
-    })
+    });
 
     const updateProfile = async () => {
-      const userRef = doc(db, 'users', auth.currentUser.uid)
-      await updateDoc(userRef, { ...user.value })
-      alert('Profilo aggiornato con successo!')
+      const userRef = doc(db, "users", auth.currentUser.uid);
+      await updateDoc(userRef, { ...user.value });
+      alert("Profilo aggiornato con successo!");
       // Qui puoi anche reindirizzare l'utente alla pagina el profilo
-    }
+    };
 
-    return { user, updateProfile }
-  }
-}
+    return { user, updateProfile };
+  },
+};
 </script>
 
 <style>
-
 .edit-profile-container {
   display: flex;
   justify-content: center;
@@ -120,7 +119,7 @@ export default {
 
 .edit-profile form button {
   /* Stili per il bottone, personalizza come preferisci */
-  background-color: #4CAF50; /* Colore di esempio per il bottone */
+  background-color: #4caf50; /* Colore di esempio per il bottone */
   color: white;
   padding: 10px 15px;
   border: none;
@@ -131,5 +130,5 @@ export default {
 .edit-profile form button:hover {
   background-color: #45a049; /* Colore al passaggio del mouse */
 }
-
 </style>
+firebase

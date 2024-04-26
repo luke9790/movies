@@ -52,3 +52,4 @@ export default {
   /* Stili aggiuntivi per il messaggio di errore */
 }
 </style>
+firebase

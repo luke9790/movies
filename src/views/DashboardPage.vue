@@ -8,33 +8,33 @@
 </template>
 
 <script>
-import { auth } from '@/firebase'
-import FilmPreferiti from '@/components/FilmPreferiti.vue'
-import { onAuthStateChanged } from 'firebase/auth'
-import { ref, onMounted } from 'vue'
+import { auth } from "@/firebase";
+import FilmPreferiti from "@/components/FilmPreferiti.vue";
+import { onAuthStateChanged } from "firebase/auth";
+import { ref, onMounted } from "vue";
 
 export default {
-  name: 'DashboardPage',
+  name: "DashboardPage",
   components: {
-    FilmPreferiti
+    FilmPreferiti,
   },
-  setup () {
-    const userId = ref(null)
+  setup() {
+    const userId = ref(null);
 
     onMounted(() => {
       onAuthStateChanged(auth, (user) => {
         if (user) {
-          userId.value = user.uid
+          userId.value = user.uid;
         }
-      })
-    })
+      });
+    });
 
-    return { userId }
-  }
-}
+    return { userId };
+  },
+};
 </script>
 
 <style scoped>
 /* Stili per DashboardPage.vue */
-
 </style>
+firebase

@@ -204,3 +204,4 @@ button:hover {
 }
 /* Altri stili per UserProfile.vue */
 </style>
+firebase

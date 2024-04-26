@@ -256,3 +256,4 @@ h2 {
   font-size: 16px; /* Adegua la dimensione del font se necessario */
 }
 </style>
+firebase
