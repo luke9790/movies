@@ -15,9 +15,11 @@ jobs:
           node-version: "20"
           cache: "npm"
       - run: npm install
-      - run: npm run build # Assicurati che questo script generi i file nella cartella 'dist'
+      - run: npm run build
       - name: Install Firebase CLI
         run: npm install -g firebase-tools
+      - name: Set Firebase project
+        run: firebase use film-database-5d752
       - name: Deploy to Firebase
         run: firebase deploy --only hosting --token ${{ secrets.FIREBASE_TOKEN }}
         env:
