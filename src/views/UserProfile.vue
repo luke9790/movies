@@ -12,125 +12,144 @@
     <button @click="startEdit">Edit profile</button>
     <button @click="logout">Logout</button>
     <button @click="showConfirmModal = true">Delete Account</button>
-  <!-- ConfirmModal viene visualizzata quando showConfirmModal è true -->
-    <ConfirmModal v-if="showConfirmModal"
-                message="Are you sure you want to delete your account? This action is irreversible. Please re-enter your password to confirm."
-                @confirm="handleConfirm"
-                @cancel="handleCancel" />
+    <!-- ConfirmModal viene visualizzata quando showConfirmModal è true -->
+    <ConfirmModal
+      v-if="showConfirmModal"
+      message="Are you sure you want to delete your account? This action is irreversible. Please re-enter your password to confirm."
+      @confirm="handleConfirm"
+      @cancel="handleCancel"
+    />
 
     <!-- Mostra un messaggio di errore se presente -->
     <p v-if="error" class="error">{{ error }}</p>
-</div>
-
+  </div>
 </template>
 
 <script>
-import { ref, onMounted } from 'vue'
-import { auth, db } from '@/firebase'
-import { reauthenticateWithCredential, EmailAuthProvider, deleteUser, signOut } from 'firebase/auth'
-import { doc, getDoc } from 'firebase/firestore'
-import { useRouter } from 'vue-router'
-import ConfirmModal from '../components/ConfirmModal.vue'
+import { ref, onMounted } from "vue";
+import { auth, db } from "@/firebase";
+import {
+  reauthenticateWithCredential,
+  EmailAuthProvider,
+  deleteUser,
+  signOut,
+} from "firebase/auth";
+import { doc, getDoc } from "firebase/firestore";
+import { useRouter } from "vue-router";
+import ConfirmModal from "../components/ConfirmModal.vue";
 
 export default {
   components: { ConfirmModal },
-  setup () {
-    const error = ref('')
-    const displayName = ref('')
-    const email = ref('')
-    const username = ref('')
-    const firstName = ref('')
-    const lastName = ref('')
-    const gender = ref('')
-    const country = ref('')
-    const router = useRouter()
-    const showConfirmModal = ref(false)
+  setup() {
+    const error = ref("");
+    const displayName = ref("");
+    const email = ref("");
+    const username = ref("");
+    const firstName = ref("");
+    const lastName = ref("");
+    const gender = ref("");
+    const country = ref("");
+    const router = useRouter();
+    const showConfirmModal = ref(false);
 
     const logout = () => {
-      signOut(auth).then(() => {
-        // Reindirizza l'utente alla pagina di login dopo il logout
-        router.push('/login')
-      }).catch((error) => {
-        // Gestisci eventuali errori durante il logout
-        console.error('Errore durante il logout:', error)
-      })
-    }
+      signOut(auth)
+        .then(() => {
+          // Reindirizza l'utente alla pagina di login dopo il logout
+          router.push("/login");
+        })
+        .catch((error) => {
+          // Gestisci eventuali errori durante il logout
+        });
+    };
 
     const fetchUserData = async () => {
       if (auth.currentUser) {
-        const userRef = doc(db, 'users', auth.currentUser.uid)
-        const docSnap = await getDoc(userRef)
+        const userRef = doc(db, "users", auth.currentUser.uid);
+        const docSnap = await getDoc(userRef);
         if (docSnap.exists()) {
           // Imposta i valori dei dati utente
-          const userData = docSnap.data()
-          username.value = userData.username || 'Not specified'
-          firstName.value = userData.firstName || 'Not specified'
-          lastName.value = userData.lastName || 'Not specified'
-          gender.value = userData.gender || 'Not specified'
-          country.value = userData.country || 'Not specified'
+          const userData = docSnap.data();
+          username.value = userData.username || "Not specified";
+          firstName.value = userData.firstName || "Not specified";
+          lastName.value = userData.lastName || "Not specified";
+          gender.value = userData.gender || "Not specified";
+          country.value = userData.country || "Not specified";
           // Email e displayName sono già disponibili tramite auth.currentUser
-          email.value = auth.currentUser.email
-          displayName.value = auth.currentUser.displayName || username.value // Usa username se displayName non è disponibile
+          email.value = auth.currentUser.email;
+          displayName.value = auth.currentUser.displayName || username.value; // Usa username se displayName non è disponibile
         } else {
-          console.log('No documents found for current user.')
         }
       }
-    }
+    };
 
     const deleteAccount = async () => {
       try {
-        await deleteUser(auth.currentUser)
+        await deleteUser(auth.currentUser);
         // Aggiungi qui il codice per gestire ciò che succede dopo la cancellazione dell'account, ad esempio:
         // Reindirizzare l'utente alla pagina di login o alla homepage
-        router.push('/login')
-      } catch (error) {
-        console.error('Errore di cancellazione dell\'account:', error)
-        error.value = error.message
-      }
-    }
+        router.push("/login");
+      } catch (error) {}
+    };
 
     const startEdit = () => {
-    // Esempio: navigazione a una pagina di modifica del profilo
-    // Assicurati di avere definito una route per '/edit-profile' nel tuo router
-      router.push('/edit-profile')
-    }
+      // Esempio: navigazione a una pagina di modifica del profilo
+      // Assicurati di avere definito una route per '/edit-profile' nel tuo router
+      router.push("/edit-profile");
+    };
 
     const handleConfirm = async (password) => {
       try {
-        const user = auth.currentUser
-        const credential = EmailAuthProvider.credential(user.email, password)
-        await reauthenticateWithCredential(user, credential)
-        await deleteUser(user)
+        const user = auth.currentUser;
+        const credential = EmailAuthProvider.credential(user.email, password);
+        await reauthenticateWithCredential(user, credential);
+        await deleteUser(user);
         // Mostra un messaggio di successo e reindirizza
-        alert('Account deleted successfully.')
-        router.push('/')
+        alert("Account deleted successfully.");
+        router.push("/");
       } catch (error) {
-        console.error('Errore durante la cancellazione dell\'account:', error)
-        alert('Error deleting account. Please make sure the password is correct.')
+        alert(
+          "Error deleting account. Please make sure the password is correct."
+        );
       }
-      showConfirmModal.value = false
-    }
+      showConfirmModal.value = false;
+    };
 
     const handleCancel = () => {
-      showConfirmModal.value = false
-    }
+      showConfirmModal.value = false;
+    };
 
-    onMounted(fetchUserData)
+    onMounted(fetchUserData);
 
     // Le funzioni startEdit e deleteAccount rimangono invariate
-    return { displayName, email, username, firstName, lastName, gender, country, logout, error, startEdit, deleteAccount, showConfirmModal, handleConfirm, handleCancel }
-  }
-}
+    return {
+      displayName,
+      email,
+      username,
+      firstName,
+      lastName,
+      gender,
+      country,
+      logout,
+      error,
+      startEdit,
+      deleteAccount,
+      showConfirmModal,
+      handleConfirm,
+      handleCancel,
+    };
+  },
+};
 </script>
 
 <style scoped>
-
-@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&display=swap");
 
 .user-profile {
-  font-family: 'Oswald', sans-serif;
+  font-family: "Oswald", sans-serif;
   font-size: 25px;
-  background-image: linear-gradient(rgba(0, 0, 0, 0.829), rgba(0, 0, 0, 0.5)), url('../assets/movies.jpg');
+  background-image: linear-gradient(rgba(0, 0, 0, 0.829), rgba(0, 0, 0, 0.5)),
+    url("../assets/movies.jpg");
   color: white;
   padding: 10px;
   border-radius: 0px;
@@ -172,8 +191,12 @@ button:hover {
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 .error {

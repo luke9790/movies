@@ -5,8 +5,18 @@
     <div v-if="filmSuggeritiPerGenere">
       <h2>Based on your genres</h2>
       <div class="suggested-grid">
-        <div v-for="(film) in filmSuggeritiPerGenere.slice(0, 10)" :key="film.id" class="suggested-item" @click="vaiADettagliFilm(film.id)">
-          <img v-if="film.poster_path" :src="`https://image.tmdb.org/t/p/w500${film.poster_path}`" alt="Poster del film" class="suggested-poster">
+        <div
+          v-for="film in filmSuggeritiPerGenere.slice(0, 10)"
+          :key="film.id"
+          class="suggested-item"
+          @click="vaiADettagliFilm(film.id)"
+        >
+          <img
+            v-if="film.poster_path"
+            :src="`https://image.tmdb.org/t/p/w500${film.poster_path}`"
+            alt="Poster del film"
+            class="suggested-poster"
+          />
           <h2>{{ film.title }}</h2>
         </div>
       </div>
@@ -15,8 +25,18 @@
     <div v-if="filmRecentiConAltaValutazione">
       <h2>Based on recent movies:</h2>
       <div class="suggested-grid">
-        <div v-for="(film) in filmRecentiConAltaValutazione.slice(0, 10)" :key="film.id" class="suggested-item" @click="vaiADettagliFilm(film.id)">
-          <img v-if="film.poster_path" :src="`https://image.tmdb.org/t/p/w500${film.poster_path}`" alt="Poster del film" class="suggested-poster">
+        <div
+          v-for="film in filmRecentiConAltaValutazione.slice(0, 10)"
+          :key="film.id"
+          class="suggested-item"
+          @click="vaiADettagliFilm(film.id)"
+        >
+          <img
+            v-if="film.poster_path"
+            :src="`https://image.tmdb.org/t/p/w500${film.poster_path}`"
+            alt="Poster del film"
+            class="suggested-poster"
+          />
           <h2>{{ film.title }}</h2>
         </div>
       </div>
@@ -25,8 +45,18 @@
     <div v-if="filmSuggeritiPerAttore">
       <h2>Based on your favourites actors:</h2>
       <div class="suggested-grid">
-        <div v-for="(film) in filmSuggeritiPerAttore.slice(0, 10)" :key="film.id" class="suggested-item" @click="vaiADettagliFilm(film.id)">
-          <img v-if="film.poster_path" :src="`https://image.tmdb.org/t/p/w500${film.poster_path}`" alt="Poster del film" class="suggested-poster">
+        <div
+          v-for="film in filmSuggeritiPerAttore.slice(0, 10)"
+          :key="film.id"
+          class="suggested-item"
+          @click="vaiADettagliFilm(film.id)"
+        >
+          <img
+            v-if="film.poster_path"
+            :src="`https://image.tmdb.org/t/p/w500${film.poster_path}`"
+            alt="Poster del film"
+            class="suggested-poster"
+          />
           <h2>{{ film.title }}</h2>
         </div>
       </div>
@@ -35,129 +65,153 @@
 </template>
 
 <script>
-import { ref, onMounted } from 'vue'
-import { useRouter } from 'vue-router'
-import { db, auth } from '@/firebase'
-import { doc, getDoc } from 'firebase/firestore'
+import { ref, onMounted } from "vue";
+import { useRouter } from "vue-router";
+import { db, auth } from "@/firebase";
+import { doc, getDoc } from "firebase/firestore";
 
 export default {
-  name: 'FilmSuggeriti',
-  setup () {
-    const filmSuggeritiPerGenere = ref([])
-    const filmSuggeritiPerAttore = ref([])
-    const filmRecentiConAltaValutazione = ref([])
-    const filmSuggeritiIds = ref(new Set())
-    const router = useRouter()
+  name: "FilmSuggeriti",
+  setup() {
+    const filmSuggeritiPerGenere = ref([]);
+    const filmSuggeritiPerAttore = ref([]);
+    const filmRecentiConAltaValutazione = ref([]);
+    const filmSuggeritiIds = ref(new Set());
+    const router = useRouter();
 
     onMounted(async () => {
-      const user = auth.currentUser
-      if (!user) return
-      const userRef = doc(db, 'utenti', user.uid)
-      const docSnap = await getDoc(userRef)
-      if (!docSnap.exists() || !docSnap.data().preferiti) return
+      const user = auth.currentUser;
+      if (!user) return;
+      const userRef = doc(db, "utenti", user.uid);
+      const docSnap = await getDoc(userRef);
+      if (!docSnap.exists() || !docSnap.data().preferiti) return;
 
-      const preferiti = docSnap.data().preferiti
-      const preferitiIds = preferiti.map(film => film.id)
-      const { generiPreferiti, attoriPreferiti } = estraiPreferenze(preferiti)
+      const preferiti = docSnap.data().preferiti;
+      const preferitiIds = preferiti.map((film) => film.id);
+      const { generiPreferiti, attoriPreferiti } = estraiPreferenze(preferiti);
 
-      await caricaFilmSuggeritiPerGenere(generiPreferiti, preferitiIds, filmSuggeritiIds)
-      await caricaFilmSuggeritiPerAttore(attoriPreferiti, filmSuggeritiIds)
-      await caricaFilmRecentiConAltaValutazione(filmSuggeritiIds)
-    })
+      await caricaFilmSuggeritiPerGenere(
+        generiPreferiti,
+        preferitiIds,
+        filmSuggeritiIds
+      );
+      await caricaFilmSuggeritiPerAttore(attoriPreferiti, filmSuggeritiIds);
+      await caricaFilmRecentiConAltaValutazione(filmSuggeritiIds);
+    });
 
-    function vaiADettagliFilm (filmId) {
-      router.push({ name: 'MovieDetail', params: { id: filmId } })
+    function vaiADettagliFilm(filmId) {
+      router.push({ name: "MovieDetail", params: { id: filmId } });
     }
-    function estraiPreferenze (preferiti) {
-      let generiPreferiti = new Set()
-      let attoriPreferiti = new Set()
+    function estraiPreferenze(preferiti) {
+      let generiPreferiti = new Set();
+      let attoriPreferiti = new Set();
 
-      preferiti.forEach(film => {
-        (film.genre_ids || []).forEach(genre => generiPreferiti.add(genre));
-        (film.actors || []).forEach(actor => attoriPreferiti.add(actor.id))
-      })
+      preferiti.forEach((film) => {
+        (film.genre_ids || []).forEach((genre) => generiPreferiti.add(genre));
+        (film.actors || []).forEach((actor) => attoriPreferiti.add(actor.id));
+      });
 
-      generiPreferiti = Array.from(generiPreferiti)
-      attoriPreferiti = Array.from(attoriPreferiti)
+      generiPreferiti = Array.from(generiPreferiti);
+      attoriPreferiti = Array.from(attoriPreferiti);
 
-      return { generiPreferiti, attoriPreferiti }
+      return { generiPreferiti, attoriPreferiti };
     }
 
-    async function caricaFilmSuggeritiPerGenere (generiPreferiti, preferitiIds, filmSuggeritiIds) {
-      const API_KEY = process.env.VUE_APP_TMDB_API_KEY
-      let risultati = []
+    async function caricaFilmSuggeritiPerGenere(
+      generiPreferiti,
+      preferitiIds,
+      filmSuggeritiIds
+    ) {
+      const API_KEY = process.env.VUE_APP_TMDB_API_KEY;
+      let risultati = [];
 
       for (const genere of generiPreferiti) {
-        const response = await fetch(`https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&with_genres=${genere}&vote_average.gte=8`)
+        const response = await fetch(
+          `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&with_genres=${genere}&vote_average.gte=8`
+        );
         if (!response.ok) {
-          console.error('Errore nel recuperare i film per genere')
-          continue // Continua con il prossimo genere in caso di errore
+          continue; // Continua con il prossimo genere in caso di errore
         }
-        const data = await response.json()
-        const filmValidi = data.results.filter(film => !preferitiIds.includes(film.id) && !filmSuggeritiIds.value.has(film.id))
-        filmValidi.forEach(film => filmSuggeritiIds.value.add(film.id))
-        risultati = risultati.concat(filmValidi)
+        const data = await response.json();
+        const filmValidi = data.results.filter(
+          (film) =>
+            !preferitiIds.includes(film.id) &&
+            !filmSuggeritiIds.value.has(film.id)
+        );
+        filmValidi.forEach((film) => filmSuggeritiIds.value.add(film.id));
+        risultati = risultati.concat(filmValidi);
       }
 
       // Filtrare i duplicati
-      filmSuggeritiPerGenere.value = [...new Map(risultati.map(item => [item.id, item])).values()]
+      filmSuggeritiPerGenere.value = [
+        ...new Map(risultati.map((item) => [item.id, item])).values(),
+      ];
     }
 
-    async function caricaFilmSuggeritiPerAttore (attoriPreferiti, filmSuggeritiIds) {
-      const API_KEY = process.env.VUE_APP_TMDB_API_KEY
-      let risultati = []
+    async function caricaFilmSuggeritiPerAttore(
+      attoriPreferiti,
+      filmSuggeritiIds
+    ) {
+      const API_KEY = process.env.VUE_APP_TMDB_API_KEY;
+      let risultati = [];
 
-      // Esempio: cicla su un array di ID attore e recupera i film per ciascuno
       for (const attoreId of attoriPreferiti) {
-        const response = await fetch(`https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&with_cast=${attoreId}`)
+        const response = await fetch(
+          `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&with_cast=${attoreId}`
+        );
         if (!response.ok) {
-          console.error('Errore nel recuperare i film per attore')
-          continue // Continua con il prossimo attore in caso di errore
+          continue;
         }
-        const data = await response.json()
-        const filmValidi = data.results.filter(film => !filmSuggeritiIds.value.has(film.id))
-        filmValidi.forEach(film => filmSuggeritiIds.value.add(film.id))
-        risultati = risultati.concat(filmValidi)
+        const data = await response.json();
+        const filmValidi = data.results.filter(
+          (film) => !filmSuggeritiIds.value.has(film.id)
+        );
+        filmValidi.forEach((film) => filmSuggeritiIds.value.add(film.id));
+        risultati = risultati.concat(filmValidi);
       }
 
-      // Filtrare i duplicati
-      filmSuggeritiPerAttore.value = [...new Map(risultati.map(item => [item.id, item])).values()]
+      filmSuggeritiPerAttore.value = [
+        ...new Map(risultati.map((item) => [item.id, item])).values(),
+      ];
     }
 
-    async function caricaFilmRecentiConAltaValutazione (filmSuggeritiIds) {
-      const API_KEY = process.env.VUE_APP_TMDB_API_KEY
-      const risultati = []
-      let pagina = 1
-      const numeroDesiderato = 10
+    async function caricaFilmRecentiConAltaValutazione(filmSuggeritiIds) {
+      const API_KEY = process.env.VUE_APP_TMDB_API_KEY;
+      const risultati = [];
+      let pagina = 1;
+      const numeroDesiderato = 10;
       while (risultati.length < numeroDesiderato) {
-        const response = await fetch(`https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&primary_release_date.gte=2020-01-01&vote_average.gte=8&vote_count.gte=100&with_runtime.gte=80&sort_by=popularity.desc&page=${pagina}`)
+        const response = await fetch(
+          `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&primary_release_date.gte=2020-01-01&vote_average.gte=8&vote_count.gte=100&with_runtime.gte=80&sort_by=popularity.desc&page=${pagina}`
+        );
         if (!response.ok) {
-          console.error('Errore nel recuperare i film recenti con alta valutazione')
-          break // Interrompe il ciclo in caso di errore nella richiesta API
+          break;
         }
-        const data = await response.json()
-        const filmValidi = data.results.filter(film => !filmSuggeritiIds.value.has(film.id))
-        filmValidi.forEach(film => {
+        const data = await response.json();
+        const filmValidi = data.results.filter(
+          (film) => !filmSuggeritiIds.value.has(film.id)
+        );
+        filmValidi.forEach((film) => {
           if (risultati.length < numeroDesiderato) {
-            filmSuggeritiIds.value.add(film.id)
-            risultati.push(film)
+            filmSuggeritiIds.value.add(film.id);
+            risultati.push(film);
           }
-        })
-        pagina++ // Passa alla pagina successiva dei risultati
-        if (pagina > data.total_pages) break // Esce dal ciclo se non ci sono più pagine disponibili
+        });
+        pagina++; // Passa alla pagina successiva dei risultati
+        if (pagina > data.total_pages) break; // Esce dal ciclo se non ci sono più pagine disponibili
       }
 
-      filmRecentiConAltaValutazione.value = risultati
+      filmRecentiConAltaValutazione.value = risultati;
     }
 
     return {
       filmSuggeritiPerGenere,
       filmSuggeritiPerAttore,
       filmRecentiConAltaValutazione,
-      vaiADettagliFilm
-    }
-  }
-}
+      vaiADettagliFilm,
+    };
+  },
+};
 </script>
 
 <style>
@@ -185,8 +239,10 @@ export default {
 }
 
 .suggested-item:hover {
-  transform: scale(1.05); /* Aumenta leggermente la dimensione al passaggio del mouse */
-  box-shadow: 0 8px 16px rgba(0,0,0,0.2); /* Aggiunge un'ombra per l'evidenziazione */
+  transform: scale(
+    1.05
+  ); /* Aumenta leggermente la dimensione al passaggio del mouse */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Aggiunge un'ombra per l'evidenziazione */
 }
 
 .suggested-poster {
@@ -199,5 +255,4 @@ h2 {
   text-align: center; /* Assicura che il titolo sia centrato */
   font-size: 16px; /* Adegua la dimensione del font se necessario */
 }
-
 </style>

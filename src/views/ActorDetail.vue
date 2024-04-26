@@ -2,7 +2,15 @@
   <div v-if="actor" class="actor-detail-page">
     <div class="actor-detail-container">
       <div class="actor-image-container">
-        <img :src="actor.profile_path ? `https://image.tmdb.org/t/p/w300${actor.profile_path}` : '/path/to/default/image'" :alt="actor.name" class="actor-image">
+        <img
+          :src="
+            actor.profile_path
+              ? `https://image.tmdb.org/t/p/w300${actor.profile_path}`
+              : '/path/to/default/image'
+          "
+          :alt="actor.name"
+          class="actor-image"
+        />
       </div>
       <div class="actor-info-container">
         <h1>{{ actor.name }}</h1>
@@ -14,55 +22,66 @@
     <div class="actor-movies-container">
       <h2>Movies</h2>
       <div class="movies-list">
-        <div v-for="movie in actor.movies" :key="movie.id" class="movie-item" @click="goToMovieDetails(movie.id)">
-          <img :src="movie.poster_path ? `https://image.tmdb.org/t/p/w185${movie.poster_path}` : '/path/to/default/image'" :alt="movie.title" class="movie-poster">
+        <div
+          v-for="movie in actor.movies"
+          :key="movie.id"
+          class="movie-item"
+          @click="goToMovieDetails(movie.id)"
+        >
+          <img
+            :src="
+              movie.poster_path
+                ? `https://image.tmdb.org/t/p/w185${movie.poster_path}`
+                : '/path/to/default/image'
+            "
+            :alt="movie.title"
+            class="movie-poster"
+          />
           <div class="movie-title">{{ movie.title }}</div>
         </div>
       </div>
     </div>
   </div>
-  <div v-else>
-    Loading actor details...
-  </div>
+  <div v-else>Loading actor details...</div>
 </template>
 
 <script>
-import { ref, onMounted } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
+import { ref, onMounted } from "vue";
+import { useRoute, useRouter } from "vue-router";
 
 export default {
-  setup () {
-    const route = useRoute()
-    const router = useRouter()
-    const actor = ref(null)
+  setup() {
+    const route = useRoute();
+    const router = useRouter();
+    const actor = ref(null);
 
     const fetchActorDetails = async () => {
       try {
-        const response = await fetch(`https://api.themoviedb.org/3/person/${route.params.id}?api_key=${process.env.VUE_APP_TMDB_API_KEY}&append_to_response=movie_credits`)
-        if (!response.ok) throw new Error('Failed to fetch actor details')
-        const data = await response.json()
+        const response = await fetch(
+          `https://api.themoviedb.org/3/person/${route.params.id}?api_key=${process.env.VUE_APP_TMDB_API_KEY}&append_to_response=movie_credits`
+        );
+        if (!response.ok) throw new Error("Failed to fetch actor details");
+        const data = await response.json();
 
         actor.value = {
           ...data,
-          movies: data.movie_credits.cast // Presumi che `movie_credits` sia incluso nella risposta
-        }
-      } catch (error) {
-        console.error(error)
-      }
-    }
+          movies: data.movie_credits.cast, // Presumi che `movie_credits` sia incluso nella risposta
+        };
+      } catch (error) {}
+    };
 
     const goToMovieDetails = (movieId) => {
-      router.push({ name: 'MovieDetail', params: { id: movieId } })
-    }
+      router.push({ name: "MovieDetail", params: { id: movieId } });
+    };
 
-    onMounted(fetchActorDetails)
+    onMounted(fetchActorDetails);
 
     return {
       actor,
-      goToMovieDetails
-    }
-  }
-}
+      goToMovieDetails,
+    };
+  },
+};
 </script>
 <style scoped>
 .actor-detail-page {
