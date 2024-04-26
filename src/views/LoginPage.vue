@@ -22,7 +22,7 @@
 
 <script>
 import { auth } from "@/firebase"; // Assicurati che il percorso sia corretto per il tuo file di configurazione Firebase
-import { signInWithEmailAndPassword } from "firebase/auth";
+import { signInWithEmailAndPassword } from "@firebase/auth";
 
 export default {
   name: "LoginPage",
@@ -52,4 +52,4 @@ export default {
   /* Stili aggiuntivi per il messaggio di errore */
 }
 </style>
-firebase
+firebase firebase

@@ -44,7 +44,13 @@
 
 <script>
 import { db } from "@/firebase";
-import { doc, getDoc, setDoc, updateDoc, arrayUnion } from "firebase/firestore";
+import {
+  doc,
+  getDoc,
+  setDoc,
+  updateDoc,
+  arrayUnion,
+} from "@firebase/firestore";
 import { ref, onMounted, watch, watchEffect } from "vue";
 import { useRouter } from "vue-router";
 
@@ -236,4 +242,4 @@ export default {
   text-align: center;
 }
 </style>
-firebase
+firebase firebase

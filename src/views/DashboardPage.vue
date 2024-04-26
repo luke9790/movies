@@ -37,4 +37,4 @@ export default {
 <style scoped>
 /* Stili per DashboardPage.vue */
 </style>
-firebase
+firebase firebase

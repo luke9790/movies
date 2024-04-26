@@ -42,7 +42,7 @@
 import { onMounted, ref } from "vue";
 import { auth } from "./firebase";
 import { onAuthStateChanged } from "firebase/auth";
-import SearchBar from "./components/SearchBar.vue"; // Assicurati che il percorso sia corretto
+import SearchBar from "./components/SearchBar.vue";
 
 export default {
   components: {
@@ -65,4 +65,4 @@ export default {
 <style>
 /* Stili globali */
 </style>
-../firebase
+../firebase ../firebase

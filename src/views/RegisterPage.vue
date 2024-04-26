@@ -25,9 +25,9 @@
   </div>
 </template>
 <script>
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import { auth, db } from "@/firebase"; // Assicurati che il percorso sia corretto
-import { doc, setDoc } from "firebase/firestore";
+import { createUserWithEmailAndPassword } from "@firebase/auth";
+import { auth, db } from "@/firebase";
+import { doc, setDoc } from "@firebase/firestore";
 
 export default {
   name: "RegisterPage",
@@ -73,4 +73,4 @@ export default {
 }
 /* Altri stili per RegisterPage.vue */
 </style>
-firebase
+firebase firebase

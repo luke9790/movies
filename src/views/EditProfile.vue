@@ -41,7 +41,7 @@
 <script>
 import { ref, onMounted } from "vue";
 import { auth, db } from "@/firebase";
-import { doc, getDoc, updateDoc } from "firebase/firestore";
+import { doc, getDoc, updateDoc } from "@firebase/firestore";
 
 export default {
   setup() {
@@ -131,4 +131,4 @@ export default {
   background-color: #45a049; /* Colore al passaggio del mouse */
 }
 </style>
-firebase
+firebase firebase

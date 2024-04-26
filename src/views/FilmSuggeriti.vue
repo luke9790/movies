@@ -68,7 +68,7 @@
 import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import { db, auth } from "@/firebase";
-import { doc, getDoc } from "firebase/firestore";
+import { doc, getDoc } from "@firebase/firestore";
 
 export default {
   name: "FilmSuggeriti",
@@ -256,4 +256,4 @@ h2 {
   font-size: 16px; /* Adegua la dimensione del font se necessario */
 }
 </style>
-firebase
+firebase firebase

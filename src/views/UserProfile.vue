@@ -34,7 +34,7 @@ import {
   deleteUser,
   signOut,
 } from "firebase/auth";
-import { doc, getDoc } from "firebase/firestore";
+import { doc, getDoc } from "@firebase/firestore";
 import { useRouter } from "vue-router";
 import ConfirmModal from "../components/ConfirmModal.vue";
 
@@ -204,4 +204,4 @@ button:hover {
 }
 /* Altri stili per UserProfile.vue */
 </style>
-firebase
+firebase firebase
