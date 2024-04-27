@@ -3,13 +3,13 @@ html {
   margin: 0;
   padding: 0;
   font-family: "Arial", sans-serif;
+  overflow-x: hidden; /* Previene lo scroll orizzontale */
 }
 
 #app-container {
   display: flex;
   flex-direction: column;
-  min-height: 100vh; /* Aumentato per occupare almeno tutta la viewport height */
-  min-width: 100vh;
+  min-height: 100vh;
   background-color: #e5e5e6;
 }
 
@@ -17,6 +17,7 @@ html {
   flex: 1;
   display: flex;
   flex-direction: column;
+  width: 100%; /* Assicura che il contenuto usi l'intera larghezza disponibile */
 }
 
 #app {
@@ -36,9 +37,11 @@ html {
   min-height: 80vh;
   padding: 0px;
   text-align: center;
+  width: 100%; /* Assicura che le pagine usino l'intera larghezza disponibile */
 }
 
-.edit-profile {
+.edit-profile,
+.user-profile {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -49,64 +52,112 @@ html {
   text-align: center;
 }
 
-.user-profile {
-  min-height: 80vh;
-}
-
 /* Stili specifici per la home */
 .home {
-  position: relative;
   background: url("../assets/mmrdykwhh2b11.png") center no-repeat;
   background-size: cover;
   color: white;
+  padding: 20px; /* Aggiunge padding per evitare che il testo tocchi i bordi */
 }
 
-.home::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.76);
-  z-index: 1;
-}
-
-.home *,
 .home h1,
 .home h3,
 .home p {
-  position: relative;
-  z-index: 2;
-  font-size: 2rem;
+  font-size: calc(1rem + 1vw); /* Responsive font size */
   max-width: 800px;
   margin: 20px auto;
-  padding: 15px;
   background-color: rgba(32, 35, 42, 0.8);
   border-radius: 10px;
+  padding: 15px;
   color: #fff;
   font-weight: bold;
 }
 
 nav {
   background-color: #20232a;
-  padding: 1vh 2vw;
-  margin: 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
   width: 100%;
+  padding: 10px 0;
 }
 
 .navbar-left,
 .navbar-right {
   display: flex;
   align-items: center;
-  width: 50%;
+  flex: 1;
 }
 
-.navbar-left,
-.navbar-right,
+.navbar-logo {
+  height: 10vh; /* Aumentato l'altezza del logo al 10% della altezza della viewport */
+  width: auto; /* Mantiene le proporzioni corrette del logo */
+  margin-right: 2vw; /* Aumentato lo spazio tra il logo e la search bar */
+  flex: 0 0 auto; /* Non permette al logo di crescere o restringersi */
+}
+
+.search-container {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-grow: 1;
+  max-width: calc(100% - 100px); /* Limita la larghezza per evitare overflow */
+  position: relative;
+}
+
+.search-bar {
+  padding: 0.5vh 1vw;
+  border: 2px solid #61dafb;
+  border-radius: 20px;
+  outline: none;
+  width: 100%;
+  max-width: 600px;
+  height: calc(3vh + 10px);
+}
+
+.suggestions-container {
+  position: absolute;
+  top: calc(100% + 5px);
+  left: 0;
+  right: 0;
+  background: white;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  z-index: 10;
+  width: 100%; /* Ora copre tutta la larghezza della search bar */
+  background-color: #fff; /* Sfondo bianco per le suggerenze per contrastare con il tema scuro */
+  border-radius: 20px; /* Bordi arrotondati solo nella parte inferiore */
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2); /* Raddoppia l'ombra per una maggiore visibilità */
+}
+
+.film-suggestion {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border-bottom: 1px solid #eee; /* Una leggera linea tra i suggerimenti per una migliore separazione visiva */
+  cursor: pointer; /* Cambia il cursore per indicare che è cliccabile */
+  transition: background-color 0.3s ease; /* Transizione morbida per l'hover */
+}
+
+.film-suggestion:hover {
+  background-color: #f2f2f2; /* Cambia lo sfondo al passaggio del mouse per migliorare l'interattività */
+}
+
+.film-suggestion:last-child {
+  border-bottom: none; /* Rimuove il bordo dall'ultimo elemento per mantenere un design pulito */
+}
+
+.film-suggestion-poster {
+  width: 50px; /* Dimensione fissa per le immagini dei film per coerenza */
+  margin-right: 10px; /* Margini per non sovrapporre testo e immagine */
+}
+
+.film-suggestion-title {
+  font-size: 14px; /* Dimensione del font coerente e leggibile */
+  display: inline-block; /* Garantisce che il titolo sia allineato correttamente con l'immagine */
+  font-weight: bold; /* Rende il titolo più visibile */
+  color: #20232a; /* Colore del testo scuro per un buon contrasto su sfondo chiaro */
+}
+
 .nav-item,
 .login-link,
 .user-info,
@@ -115,190 +166,56 @@ nav a {
   align-items: center;
   color: #61dafb;
   text-decoration: none;
-  border-radius: 5px;
+  border-radius: 20px;
   transition: background-color 0.3s;
   font-weight: bold;
-  flex: 1;
-  padding: 0.8vw; /* Padding responsivo */
-  margin: 0 0.5vw; /* Margine ridotto e responsivo */
-  font-size: 1.2vw; /* Dimensione del font coerente con la larghezza della viewport */
-  border: 0.1vw solid transparent;
+  padding: 1vh 1vw;
+  margin: 0 1vw;
+  white-space: nowrap;
+  font-size: calc(0.8rem + 0.5vw);
+  background-color: transparent; /* Sfondo trasparente di default */
+  border: 2px solid transparent; /* Bordo trasparente di default */
 }
 
-.navbar-left {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start; /* Allinea gli elementi a sinistra senza spingere lontano */
-  padding-left: 1vw;
-}
-
-.navbar-logo {
-  height: 8vh; /* Altezza del logo in percentuale della altezza della viewport */
-  width: auto; /* Mantiene le proporzioni corrette del logo */
-  margin-right: 1vw; /* Spazio tra il logo e la searchbar, adattabile */
-  flex: 0 0 auto; /* Non cresce né si restringe, dimensione auto */
+.nav-item:hover,
+.login-link:hover,
+.user-info:hover,
+nav a:not(.navbar-logo-link):hover,
+.nav-item.router-link-exact-active,
+.login-link.router-link-exact-active,
+.user-info.router-link-exact-active,
+nav a.router-link-exact-active {
+  background-color: #61dafb; /* Colore di sfondo azzurro */
+  color: #20232a; /* Testo scuro per contrasto */
+  border-color: #61dafb; /* Bordo azzurro */
 }
 
 .navbar-logo-link,
 .navbar-logo-link:hover,
 .navbar-logo-link.router-link-exact-active {
-  background-color: transparent;
-  color: inherit;
-  display: flex; /* Assicura che il logo sia in linea con gli altri elementi */
-  align-items: center;
-  margin-right: 2vw; /* Spazio tra il logo e la search bar */
-}
-
-/* Stili generali per link nella navbar, escluso il logo */
-.nav-item,
-.login-link,
-.user-info,
-nav a:not(.navbar-logo-link) {
-  display: flex;
-  align-items: center;
-  color: #61dafb;
-  text-decoration: none;
-  border-radius: 20px;
-  transition: background-color 0.3s;
-  font-weight: bold;
-  padding: 1vh 1vw; /* Utilizza vh e vw per il padding */
-  margin: 0 1vw; /* Distanza tra gli elementi basata su vw */
-  white-space: nowrap;
-  font-size: 1.2vw;
-}
-
-/* Stili per hover ed elementi attivi, ancora escluso il logo */
-.nav-item:hover,
-.login-link:hover,
-.user-info:hover,
-nav a:not(.navbar-logo-link):hover,
-nav a:not(.navbar-logo-link).router-link-exact-active {
-  background-color: #61dafb;
-  color: #20232a;
-  border-radius: 20px;
-}
-
-.navbar-logo-link {
-  display: flex;
-  align-items: center;
-  margin-right: 1vw; /* Distanza tra logo e search bar */
-  flex: 0 0 auto; /* Non permette al logo di crescere o restringersi */
-}
-
-/* Assicurati che il logo non cambi colore o sfondo al passaggio del mouse o quando è attivo */
-.navbar-logo-link:hover,
-.navbar-logo-link.router-link-exact-active {
-  background-color: transparent; /* Mantiene lo sfondo trasparente */
-  color: inherit; /* Mantiene il colore del testo invariato */
-}
-
-.router-view {
-  padding-top: 180px; /* Adegua questo valore in base all'altezza della tua navbar */
-}
-
-.search-container {
-  flex: 1; /* Continua a permettere alla search bar di occupare lo spazio disponibile */
-  display: flex;
-  justify-content: flex-start; /* Mantiene la search bar allineata a sinistra */
-  height: clamp(
-    20px,
-    7vh,
-    40px
-  ); /* Imposta un'altezza minima di 30px, ideale di 5vh, e massima di 50px */
-  align-items: center; /* Centra verticalmente la search bar all'interno del contenitore */
-  position: relative;
-}
-
-.search-bar {
-  padding: 0.5vh 1vw; /* Aggiusta il padding verticalmente in base all'altezza */
-  border: 0.1vw solid #61dafb;
-  border-radius: 20px;
-  outline: none;
-  width: 100%; /* Occupa tutto lo spazio orizzontale disponibile */
-  height: 100%; /* Occupa tutto lo spazio verticale disponibile del contenitore */
-  max-width: 600px; /* Limita la larghezza massima */
-  transition: all 0.3s ease;
-}
-
-.search-bar:focus {
-  border-color: #61dafb;
-  box-shadow: 0 0 2px 0 rgba(255, 255, 255, 0.5);
-}
-
-.search-bar:focus {
-  border-color: #61dafb; /* Cambia il colore del bordo al focus per maggior visibilità */
-  box-shadow: 0 0 2px 0 rgba(255, 255, 255, 0.5); /* Leggero glow effect al focus */
-}
-.suggestions-container {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  right: 0;
-  background: white;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  z-index: 10;
-  width: 15vw; /* Assicura che il contenitore delle suggerenze sia largo quanto la search bar */
-  background-color: #fff; /* Sfondo bianco per le suggerenze per contrastare con il tema scuro */
-  border-radius: 20px 20px 20px 20px; /* Bordi arrotondati solo nella parte inferiore */
-  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
-}
-
-.film-suggestion {
-  display: flex;
-  align-items: center;
-  padding: 10px;
-  border-bottom: 1px solid #eee;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  border-radius: 20px;
-}
-
-.film-suggestion:hover {
-  background-color: #f2f2f2; /* Cambia lo sfondo al passaggio del mouse */
-  border-radius: 20px;
-}
-
-.film-suggestion:last-child {
-  border-bottom: none;
-}
-
-.film-suggestion-poster {
-  width: 50px;
-  margin-right: 10px;
-}
-
-.film-suggestion-title {
-  font-size: 14px;
-  display: inline-block;
-  font-weight: bold;
-  color: #20232a;
-}
-
-.movie-detail-container {
-  display: flex;
-  padding: 20px;
-}
-
-.movie-poster {
-  width: 300px;
-  margin-right: 20px;
-}
-
-.movie-info h1 {
-  margin-top: 0;
-}
-
-.release-date,
-.genres,
-.overview {
-  margin: 10px 0;
+  background-color: transparent; /* Mantieni trasparente per il logo */
+  color: inherit; /* Colore ereditato */
+  border: none; /* Nessun bordo per il logo */
 }
 
 .footer {
   text-align: center;
   padding: 30px;
-  margin: 0px; /* Aggiunge spazio sopra il footer */
   background-color: #20232a;
-  color: #fff; /* Colore del testo */
-  height: 100%;
+  color: #fff;
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+  .navbar-left,
+  .navbar-right {
+    flex-direction: column; /* Impila gli elementi verticalmente su schermi piccoli */
+  }
+
+  .nav-item,
+  .login-link,
+  .user-info,
+  nav a {
+    font-size: 1rem; /* Riduce la dimensione del testo su schermi piccoli */
+  }
 }

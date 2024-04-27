@@ -1,24 +1,22 @@
-# film
+# Welcome to CinemaWorld!
 
-## Project setup
-```
-npm install
-```
+Welcome to the CinemaWorld website! This website has been created as a personal project to test the development of a web app using Vue.
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+## Access to the Website
 
-### Compiles and minifies for production
-```
-npm run build
-```
+To access the website, please visit the following link:
 
-### Lints and fixes files
-```
-npm run lint
-```
+[Link to the Website](https://film-database-5d752.web.app/)
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+## Test Access Credentials
+
+For testing purposes, you can use the following access credentials:
+
+- **Email:** luca2@gmail.com
+- **Password:** 123456
+
+Alternatively, you can register and add your favorite movies to receive tailored suggestions based on your preferences.
+
+## Contact
+
+For questions, feedback, or support, feel free to contact me.
