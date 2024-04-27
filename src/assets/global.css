@@ -1,242 +1,304 @@
-body, html {
-	margin: 0;
-	padding: 0;
-	font-family: 'Arial', sans-serif; /* Imposta qui il font-family per renderlo globale */
-  }
-  
-  #app-container {
-	display: flex;
-	flex-direction: column;
-	min-height: 90vh;
-  }
-  
-  .content {
-	flex: 1;
-	/* Assicurati che il contenuto si espanda per occupare tutto lo spazio disponibile */
-	display: flex;
-	flex-direction: column;
-  }
+body,
+html {
+  margin: 0;
+  padding: 0;
+  font-family: "Arial", sans-serif;
+}
 
-  #app {
-	color: #333;
-	background-color: #e5e5e6;
-  }
-  
-  /* Stili comuni per le pagine */
-  .dashboard, .home, .login, .register {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: center;
-	min-height: 80vh;
-	padding: 0px;
-	text-align: center; /* Rimosso da .dashboard e applicato qui per ridurre la ripetizione */
-  }
-  
-  .edit-profile{
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: center;
-	min-height: 80vh;
-	padding: 5px;
-	margin: 5px;
-	text-align: center; 
-  }
+#app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* Aumentato per occupare almeno tutta la viewport height */
+  min-width: 100vh;
+  background-color: #e5e5e6;
+}
 
-  .user-profile {
-	min-height: 80vh;
-  }
-  
-  /* Stili specifici per la home */
-  .home {
-	position: relative;
-	background: url('../assets/mmrdykwhh2b11.png') center no-repeat;
-	background-size: cover; /* Modificato per usare solo 'cover' */
-	color: white; /* Cambiato in bianco per contrasto con l'overlay */
-  }
-  
-  .home::before {
-	content: "";
-	position: absolute;
-	top: 0;
-	left: 0;
-	right: 0;
-	bottom: 0;
-	background: rgba(0, 0, 0, 0.76); /* Overlay nero semi-trasparente */
-	z-index: 1;
-  }
-  
-  .home *, .home h1, .home h3, .home p {
-	position: relative;
-	z-index: 2;
-	font-size: 2rem; /* Applicato a tutti gli elementi all'interno di .home per coerenza */
-	max-width: 800px;
-	margin: 20px auto;
-	padding: 15px;
-	background-color: rgba(32, 35, 42, 0.8);
-	border-radius: 10px;
-	color: #fff;
-	font-weight: bold;
-  }
-  
-  /* Stili della navbar */
-  nav {
-	background-color: #20232a;
-	padding: 10px 20px;
-	margin: 0;
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-  }
-  
-  .navbar-left, .navbar-right, .nav-item, .login-link, .user-info, nav a {
-	display: flex;
-	align-items: center;
-	color: #61dafb;
-	text-decoration: none;
-	margin-left: 20px;
-	padding: 5px 10px;
-	border-radius: 5px;
-	transition: background-color 0.3s;
-	font-weight: bold;
-	font-size: 16px;
-  }
-  
-  .navbar-logo {
-	height: 50px;
-	margin-right: 20px; /* Aggiunto margine destro per separarlo dagli elementi successivi */
-  }
-  
-  .navbar-logo-link, .navbar-logo-link:hover, .navbar-logo-link.router-link-exact-active {
-	background-color: transparent;
-	color: inherit;
-  }
+.content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
 
-  /* Stili generali per link nella navbar, escluso il logo */
-.nav-item, .login-link, .user-info, nav a:not(.navbar-logo-link) {
-	display: flex;
-	align-items: center;
-	color: #61dafb;
-	text-decoration: none;
-	margin-left: 20px;
-	padding: 5px 10px;
-	border-radius: 5px;
-	transition: background-color 0.3s;
-	font-weight: bold;
-	font-size: 16px;
-  }
-  
-  /* Stili per hover ed elementi attivi, ancora escluso il logo */
-  .nav-item:hover, .login-link:hover, .user-info:hover, nav a:not(.navbar-logo-link):hover, nav a:not(.navbar-logo-link).router-link-exact-active {
-	background-color: #61dafb;
-	color: #20232a;
-  }
-  
+#app {
+  color: #333;
+  background-color: #e5e5e6;
+}
 
-  .navbar-logo-link {
-	display: inline-flex; /* o "flex" a seconda delle tue esigenze di layout */
-	align-items: center;
-	margin-left: 0; /* Rimuovi il margine sinistro se necessario */
-	padding: 0; /* Rimuovi il padding se necessario */
-	border-radius: 0; /* Rimuovi i bordi arrotondati se presenti */
-	transition: none; /* Disabilita le transizioni se applicate */
-  }
-  
-  /* Assicurati che il logo non cambi colore o sfondo al passaggio del mouse o quando è attivo */
-  .navbar-logo-link:hover, 
-  .navbar-logo-link.router-link-exact-active {
-	background-color: transparent; /* Mantiene lo sfondo trasparente */
-	color: inherit; /* Mantiene il colore del testo invariato */
-  }
-  
-  .router-view {
-	padding-top: 180px; /* Adegua questo valore in base all'altezza della tua navbar */
-  }
-  
-  .search-container {
-	position: relative;
-  }
+/* Stili comuni per le pagine */
+.dashboard,
+.home,
+.login,
+.register {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 80vh;
+  padding: 0px;
+  text-align: center;
+}
 
-  .search-bar {
-	padding: 8px 10px;
-	border: 2px solid #61dafb; /* Colore azzurro per il bordo, simile agli altri elementi della navbar */
-	border-radius: 20px; /* Bordi arrotondati per un aspetto più morbido */
-	outline: none; /* Rimuove l'outline al focus per un look più pulito */
-	width: 250px; /* Larghezza specifica per farla risaltare */
-	transition: all 0.3s ease; /* Transizione per gli effetti di hover e focus */
-  }
-  
-  .search-bar:focus {
-	border-color: #61dafb;/* Cambia il colore del bordo al focus per maggior visibilità */
-	box-shadow: 0 0 2px 0 rgba(255, 255, 255, 0.5); /* Leggero glow effect al focus */
-  }
-  .suggestions-container {
-	position: absolute;
-	top: 100%;
-	left: 0;
-	right: 0;
-	background: white;
-	box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-	z-index: 10;
-	width: 100%; /* Assicura che il contenitore delle suggerenze sia largo quanto la search bar */
-	background-color: #fff; /* Sfondo bianco per le suggerenze per contrastare con il tema scuro */
-	border-radius: 0 0 20px 20px; /* Bordi arrotondati solo nella parte inferiore */
-	box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2); 
-  }
-  
-  .film-suggestion {
-	display: flex;
-	align-items: center;
-	padding: 10px;
-	border-bottom: 1px solid #eee;
-	cursor: pointer;
-	transition: background-color 0.3s ease;
-  }
+.edit-profile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 80vh;
+  padding: 5px;
+  margin: 5px;
+  text-align: center;
+}
 
-  .film-suggestion:hover {
-	background-color: #f2f2f2; /* Cambia lo sfondo al passaggio del mouse */
-  }
-  
-  .film-suggestion:last-child {
-	border-bottom: none;
-  }
-  
-  .film-suggestion-poster {
-	width: 50px;
-	margin-right: 10px;
-  }
-  
-  .film-suggestion-title {
-	font-size: 14px;
-	display: inline-block;
-	font-weight: bold;
-	color: #20232a;
-  }
-  
-  .movie-detail-container {
-	display: flex;
-	padding: 20px;
-  }
-  
-  .movie-poster {
-	width: 300px;
-	margin-right: 20px;
-  }
-  
-  .movie-info h1 {
-	margin-top: 0;
-  }
-  
-  .release-date, .genres, .overview {
-	margin: 10px 0;
-  }
+.user-profile {
+  min-height: 80vh;
+}
 
-  .footer {
-	text-align: center;
-	padding: 30px;
-	margin: 0px; /* Aggiunge spazio sopra il footer */
-	background-color: #20232a;
-	color: #fff; /* Colore del testo */
-	height: 100%;
-  }
+/* Stili specifici per la home */
+.home {
+  position: relative;
+  background: url("../assets/mmrdykwhh2b11.png") center no-repeat;
+  background-size: cover;
+  color: white;
+}
+
+.home::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.76);
+  z-index: 1;
+}
+
+.home *,
+.home h1,
+.home h3,
+.home p {
+  position: relative;
+  z-index: 2;
+  font-size: 2rem;
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 15px;
+  background-color: rgba(32, 35, 42, 0.8);
+  border-radius: 10px;
+  color: #fff;
+  font-weight: bold;
+}
+
+nav {
+  background-color: #20232a;
+  padding: 1vh 2vw;
+  margin: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.navbar-left,
+.navbar-right {
+  display: flex;
+  align-items: center;
+  width: 50%;
+}
+
+.navbar-left,
+.navbar-right,
+.nav-item,
+.login-link,
+.user-info,
+nav a {
+  display: flex;
+  align-items: center;
+  color: #61dafb;
+  text-decoration: none;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+  font-weight: bold;
+  flex: 1;
+  padding: 0.8vw; /* Padding responsivo */
+  margin: 0 0.5vw; /* Margine ridotto e responsivo */
+  font-size: 1.2vw; /* Dimensione del font coerente con la larghezza della viewport */
+  border: 0.1vw solid transparent;
+}
+
+.navbar-left {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start; /* Allinea gli elementi a sinistra senza spingere lontano */
+  padding-left: 1vw;
+}
+
+.navbar-logo {
+  height: 8vh; /* Altezza del logo in percentuale della altezza della viewport */
+  width: auto; /* Mantiene le proporzioni corrette del logo */
+  margin-right: 1vw; /* Spazio tra il logo e la searchbar, adattabile */
+  flex: 0 0 auto; /* Non cresce né si restringe, dimensione auto */
+}
+
+.navbar-logo-link,
+.navbar-logo-link:hover,
+.navbar-logo-link.router-link-exact-active {
+  background-color: transparent;
+  color: inherit;
+  display: flex; /* Assicura che il logo sia in linea con gli altri elementi */
+  align-items: center;
+  margin-right: 2vw; /* Spazio tra il logo e la search bar */
+}
+
+/* Stili generali per link nella navbar, escluso il logo */
+.nav-item,
+.login-link,
+.user-info,
+nav a:not(.navbar-logo-link) {
+  display: flex;
+  align-items: center;
+  color: #61dafb;
+  text-decoration: none;
+  border-radius: 20px;
+  transition: background-color 0.3s;
+  font-weight: bold;
+  padding: 1vh 1vw; /* Utilizza vh e vw per il padding */
+  margin: 0 1vw; /* Distanza tra gli elementi basata su vw */
+  white-space: nowrap;
+  font-size: 1.2vw;
+}
+
+/* Stili per hover ed elementi attivi, ancora escluso il logo */
+.nav-item:hover,
+.login-link:hover,
+.user-info:hover,
+nav a:not(.navbar-logo-link):hover,
+nav a:not(.navbar-logo-link).router-link-exact-active {
+  background-color: #61dafb;
+  color: #20232a;
+  border-radius: 20px;
+}
+
+.navbar-logo-link {
+  display: flex;
+  align-items: center;
+  margin-right: 1vw; /* Distanza tra logo e search bar */
+  flex: 0 0 auto; /* Non permette al logo di crescere o restringersi */
+}
+
+/* Assicurati che il logo non cambi colore o sfondo al passaggio del mouse o quando è attivo */
+.navbar-logo-link:hover,
+.navbar-logo-link.router-link-exact-active {
+  background-color: transparent; /* Mantiene lo sfondo trasparente */
+  color: inherit; /* Mantiene il colore del testo invariato */
+}
+
+.router-view {
+  padding-top: 180px; /* Adegua questo valore in base all'altezza della tua navbar */
+}
+
+.search-container {
+  flex: 1; /* Continua a permettere alla search bar di occupare lo spazio disponibile */
+  display: flex;
+  justify-content: flex-start; /* Mantiene la search bar allineata a sinistra */
+  height: clamp(
+    20px,
+    7vh,
+    40px
+  ); /* Imposta un'altezza minima di 30px, ideale di 5vh, e massima di 50px */
+  align-items: center; /* Centra verticalmente la search bar all'interno del contenitore */
+  position: relative;
+}
+
+.search-bar {
+  padding: 0.5vh 1vw; /* Aggiusta il padding verticalmente in base all'altezza */
+  border: 0.1vw solid #61dafb;
+  border-radius: 20px;
+  outline: none;
+  width: 100%; /* Occupa tutto lo spazio orizzontale disponibile */
+  height: 100%; /* Occupa tutto lo spazio verticale disponibile del contenitore */
+  max-width: 600px; /* Limita la larghezza massima */
+  transition: all 0.3s ease;
+}
+
+.search-bar:focus {
+  border-color: #61dafb;
+  box-shadow: 0 0 2px 0 rgba(255, 255, 255, 0.5);
+}
+
+.search-bar:focus {
+  border-color: #61dafb; /* Cambia il colore del bordo al focus per maggior visibilità */
+  box-shadow: 0 0 2px 0 rgba(255, 255, 255, 0.5); /* Leggero glow effect al focus */
+}
+.suggestions-container {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: white;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  z-index: 10;
+  width: 15vw; /* Assicura che il contenitore delle suggerenze sia largo quanto la search bar */
+  background-color: #fff; /* Sfondo bianco per le suggerenze per contrastare con il tema scuro */
+  border-radius: 20px 20px 20px 20px; /* Bordi arrotondati solo nella parte inferiore */
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+}
+
+.film-suggestion {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  border-radius: 20px;
+}
+
+.film-suggestion:hover {
+  background-color: #f2f2f2; /* Cambia lo sfondo al passaggio del mouse */
+  border-radius: 20px;
+}
+
+.film-suggestion:last-child {
+  border-bottom: none;
+}
+
+.film-suggestion-poster {
+  width: 50px;
+  margin-right: 10px;
+}
+
+.film-suggestion-title {
+  font-size: 14px;
+  display: inline-block;
+  font-weight: bold;
+  color: #20232a;
+}
+
+.movie-detail-container {
+  display: flex;
+  padding: 20px;
+}
+
+.movie-poster {
+  width: 300px;
+  margin-right: 20px;
+}
+
+.movie-info h1 {
+  margin-top: 0;
+}
+
+.release-date,
+.genres,
+.overview {
+  margin: 10px 0;
+}
+
+.footer {
+  text-align: center;
+  padding: 30px;
+  margin: 0px; /* Aggiunge spazio sopra il footer */
+  background-color: #20232a;
+  color: #fff; /* Colore del testo */
+  height: 100%;
+}
